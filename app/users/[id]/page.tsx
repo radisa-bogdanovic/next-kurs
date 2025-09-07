@@ -2,17 +2,39 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next/types";
 
 async function fetchUser(id: string) {
-	const response = await fetch(
-		`https://jsonplaceholder.typicode.com/users/${id}`
-	);
+	const url = process.env.ENV_URL!;
+	const response = await fetch(url + `api/user/${id}`);
 	const user = await response.json();
 	return user;
 }
 
-export const metadata: Metadata = {
-	title: "Single user",
-	description: "Single user description ",
-};
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+	const { id } = await params;
+	const user = await fetchUser(id);
+
+	return {
+		title: user.name + " " + "details",
+		description: `${user.name} description`,
+		openGraph: {
+			title: user.name + " " + "details",
+			description: `${user.name} description`,
+			images: [
+				{
+					url: "https://www.shutterstock.com/shutterstock/photos/2286554497/display_1500/stock-photo-random-pictures-cute-and-funny-2286554497.jpg",
+					width: 800,
+					height: 400,
+				},
+			],
+			locale: "sr_RS",
+			type: "article",
+			url: `${process.env.ENV_URL!}user/${id}`,
+		},
+	};
+}
 
 export default async function SingleUser({
 	params,
