@@ -5,7 +5,7 @@ export async function GET(
 	{ params }: { params: Promise<{ id: string }> }
 ) {
 	const { id } = await params;
-	const secretKey = process.env.SECRET_API_KEY;
+	const secretKey = "http://localhost:3000/";
 
 	const response = await fetch(
 		`https://jsonplaceholder.typicode.com/users/${id}`,

@@ -1,13 +1,10 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-	const secretKey = process.env.SECRET_API_KEY;
-
-	const response = await fetch("https://jsonplaceholder.typicode.com/users", {
-		headers: {
-			"your-secret-key": secretKey!,
-		},
-	});
+	const response = await fetch(
+		"https://jsonplaceholder.typicode.com/users",
+		{}
+	);
 
 	if (!response.ok) {
 		return NextResponse.json({
