@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next/types";
 
 async function fetchUser(id: string) {
-	const url = process.env.ENV_URL!;
+	const url = "http://localhost:3000/";
 	const response = await fetch(url + `api/user/${id}`);
 	const user = await response.json();
 	return user;
@@ -31,7 +31,7 @@ export async function generateMetadata({
 			],
 			locale: "sr_RS",
 			type: "article",
-			url: `${process.env.ENV_URL!}user/${id}`,
+			url: `http://localhost:3000/user/${id}`,
 		},
 	};
 }
